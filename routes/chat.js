@@ -1,4 +1,7 @@
 const router = require('express').Router()
+const push = require('pusher')
+
+const pusher = new push(require('../config/pusher').pusherconfig)
 
 const data = [{
     name: "uday",
@@ -15,6 +18,12 @@ router.post('/', (req, res) => {
         data.push({
             name: req.body.name,
             content: req.body.content
+        })
+        pusher.trigger('default', 'recv_msg', {
+            message: {
+                name: req.body.name,
+                content: req.body.content
+            }
         })
         res.status(200).send({message: "successfull"})
     }
