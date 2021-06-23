@@ -5,6 +5,7 @@ import env from '../../../environments/environment'
 import pusher from 'pusher-js'
 import { MatDialog } from '@angular/material/dialog';
 import { NicknameComponent } from '../nickname/nickname.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-chat',
@@ -13,8 +14,7 @@ import { NicknameComponent } from '../nickname/nickname.component';
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private _comm: CommService, private _d: MatDialog) { }
-
+  constructor(private _comm: CommService, private _d: MatDialog, private cookie: CookieService) { }
   channel: any = null;
 
   msgs: Message[] = [
@@ -50,7 +50,14 @@ export class ChatComponent implements OnInit {
     let p = new pusher(env.key, {
       cluster: env.cluster
     })
-    this.reopen();
+    if(!this.cookie.check('nick'))
+    {
+      this.reopen();
+    }
+    else
+    {
+      this._comm.nickname = this.cookie.get('nick');
+    }
     this.channel = p.subscribe('default')
     this.channel.bind('recv_msg', (data: any) => {
       console.log(data);

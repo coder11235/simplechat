@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { CookieService } from 'ngx-cookie-service';
 import { CommService } from 'src/app/services/comm.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { CommService } from 'src/app/services/comm.service';
 })
 export class NicknameComponent implements OnInit {
 
-  constructor(private _comm: CommService, public dialogref: MatDialogRef<MatDialog>) { }
+  constructor(private _comm: CommService, public dialogref: MatDialogRef<MatDialog>, private cookie: CookieService) { }
 
   ngOnInit(): void {
   }
@@ -17,6 +18,7 @@ export class NicknameComponent implements OnInit {
   sub(nick: string, event: any) {
     event.preventDefault()
     this._comm.nickname = nick
+    this.cookie.set('nick', nick);
     this.dialogref.close();
   }
 

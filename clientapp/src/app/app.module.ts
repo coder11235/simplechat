@@ -14,6 +14,7 @@ import { MatFormFieldModule } from'@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { MatDialogModule } from '@angular/material/dialog'
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { MatDialogModule } from '@angular/material/dialog'
     MatButtonModule,
     MatDialogModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
