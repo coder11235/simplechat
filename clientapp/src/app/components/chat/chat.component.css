@@ -15,3 +15,7 @@
 .inp:focus {
     outline: none;
 }
+
+.message {
+    margin-top: 10px;
+}
