@@ -10,7 +10,11 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    res.send('posted message')
+    data.push({
+        name: req.body.name,
+        content: req.body.content
+    })
+    res.send('posted messag')
 })
 
 module.exports = router
