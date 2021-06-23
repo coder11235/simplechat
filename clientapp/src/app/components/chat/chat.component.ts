@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Message } from 'src/app/interfaces/message';
 import { CommService } from 'src/app/services/comm.service';
 
 @Component({
@@ -10,17 +11,29 @@ export class ChatComponent implements OnInit {
 
   constructor(private _comm: CommService) { }
 
-  msgs = [
+  msgs: Message[] = [
     {
       name: 'uday',
       content: 'something'
     }
   ]
 
-  sendMessage($event: any, message: String)
+  sendMessage($event: any, message: string)
   {
     $event.preventDefault();
-    this._comm.sendMessage(message);
+    this._comm.sendMessage(message)
+    .subscribe((data: any) => {
+      if(data.message == "successfull")
+      {
+        this.msgs.push({
+          name: this._comm.nickname,
+          content: message
+        })
+      }
+      else {
+        console.log(data.message)
+      }
+    })
   }
 
   ngOnInit(): void {

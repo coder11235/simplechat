@@ -13,7 +13,7 @@ export class NicknameComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit($event: any, nickname: String) {
+  onSubmit($event: any, nickname: string) {
     $event.preventDefault();
     this._comm.nickname = nickname;
   }

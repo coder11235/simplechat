@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,11 +6,13 @@ import { Injectable } from '@angular/core';
 })
 export class CommService {
 
-  nickname: String = "";
+  nickname: string = "";
+  url = 'http://localhost:8080/chat'
 
-  sendMessage(content: String) {
+  constructor(private _http: HttpClient) { }
+
+  sendMessage(content: string) {
     console.log({name: this.nickname, content: content})
+    return this._http.post(this.url, {name: this.nickname, content: content});
   }
-
-  constructor() { }
 }
