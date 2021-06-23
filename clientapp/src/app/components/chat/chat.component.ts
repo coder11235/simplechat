@@ -12,10 +12,6 @@ export class ChatComponent implements OnInit {
   constructor(private _comm: CommService) { }
 
   msgs: Message[] = [
-    {
-      name: 'uday',
-      content: 'something'
-    }
   ]
 
   sendMessage($event: any, message: string)
@@ -37,6 +33,11 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._comm.getMessages()
+    .subscribe((data: any) => {
+      console.log(data);
+      this.msgs = data;
+    })
   }
 
 }

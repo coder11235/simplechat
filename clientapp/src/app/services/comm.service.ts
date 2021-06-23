@@ -15,4 +15,8 @@ export class CommService {
     console.log({name: this.nickname, content: content})
     return this._http.post(this.url, {name: this.nickname, content: content});
   }
+
+  getMessages() {
+    return this._http.get(this.url)
+  }
 }
