@@ -10,11 +10,17 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    data.push({
-        name: req.body.name,
-        content: req.body.content
-    })
-    res.send('posted messag')
+    if(req.body.name && req.body.content)
+    {
+        data.push({
+            name: req.body.name,
+            content: req.body.content
+        })
+        res.status(200).send({message: "successfull"})
+    }
+    else {
+        res.status(400).send({message: "didnt provide name or content"})
+    }
 })
 
 module.exports = router
