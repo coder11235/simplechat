@@ -1,7 +1,12 @@
 const router = require('express').Router()
 
+const data = [{
+    name: "uday",
+    content: "test"
+}]
+
 router.get('/', (req, res) => {
-    res.send('get messages')
+    res.send(data)
 })
 
 router.post('/', (req, res) => {
