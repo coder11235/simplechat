@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import pusher from 'pusher-js'
+import { Message } from '../interfaces/message';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +20,6 @@ export class CommService {
   }
 
   getMessages() {
-    return this._http.get(this.url)
+    return this._http.get<Message[]>(this.url)
   }
 }

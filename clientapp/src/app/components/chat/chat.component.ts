@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Message } from 'src/app/interfaces/message';
 import { CommService } from 'src/app/services/comm.service';
+import env from '../../../environments/environment'
+import pusher from 'pusher-js'
 
 @Component({
   selector: 'app-chat',
@@ -10,6 +12,8 @@ import { CommService } from 'src/app/services/comm.service';
 export class ChatComponent implements OnInit {
 
   constructor(private _comm: CommService) { }
+
+  channel: any = null;
 
   msgs: Message[] = [
   ]
@@ -21,10 +25,7 @@ export class ChatComponent implements OnInit {
     .subscribe((data: any) => {
       if(data.message == "successfull")
       {
-        this.msgs.push({
-          name: this._comm.nickname,
-          content: message
-        })
+        console.log('message sent')
       }
       else {
         console.log(data.message)
@@ -38,6 +39,14 @@ export class ChatComponent implements OnInit {
       console.log(data);
       this.msgs = data;
     })
-  }
+    let p = new pusher(env.key, {
+      cluster: env.cluster
+    })
+    this.channel = p.subscribe('default')
 
+    this.channel.bind('recv_msg', (data: any) => {
+      console.log(data);
+      this.msgs.push(data.message);
+    })
+  }
 }
