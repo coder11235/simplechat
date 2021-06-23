@@ -1,1 +1,12 @@
-<p>chat works!</p>
+<div>
+    <div>
+        <div class="message" *ngFor="let msg of msgs" >
+            <div>{{msg.name}}</div><br>
+            <div>{{msg.content}}</div>
+        </div>
+    </div>
+    <form (submit)="sendMessage($event, message.value)">
+        <label>Message: </label>
+        <input type="text" name="message" #message>
+    </form>
+</div>

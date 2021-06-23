@@ -7,5 +7,9 @@ export class CommService {
 
   nickname: String = "";
 
+  sendMessage(content: String) {
+    console.log({name: this.nickname, content: content})
+  }
+
   constructor() { }
 }
