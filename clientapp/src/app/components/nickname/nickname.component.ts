@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { CommService } from 'src/app/services/comm.service';
 
 @Component({
@@ -8,14 +9,20 @@ import { CommService } from 'src/app/services/comm.service';
 })
 export class NicknameComponent implements OnInit {
 
-  constructor(private _comm: CommService) { }
+  constructor(private _comm: CommService, public dialogref: MatDialogRef<MatDialog>) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit($event: any, nickname: string) {
-    $event.preventDefault();
-    this._comm.nickname = nickname;
+  sub(nick: string, event: any) {
+    event.preventDefault()
+    this._comm.nickname = nick
+    this.dialogref.close();
+  }
+
+  nope(event: any) {
+    event.preventDefault();
+    this.dialogref.close();
   }
 
 }

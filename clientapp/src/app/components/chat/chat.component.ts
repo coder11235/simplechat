@@ -3,6 +3,8 @@ import { Message } from 'src/app/interfaces/message';
 import { CommService } from 'src/app/services/comm.service';
 import env from '../../../environments/environment'
 import pusher from 'pusher-js'
+import { MatDialog } from '@angular/material/dialog';
+import { NicknameComponent } from '../nickname/nickname.component';
 
 @Component({
   selector: 'app-chat',
@@ -11,13 +13,19 @@ import pusher from 'pusher-js'
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private _comm: CommService) { }
+  constructor(private _comm: CommService, private _d: MatDialog) { }
 
   channel: any = null;
 
   msgs: Message[] = [
   ]
 
+  reopen() {
+    this._d.open(NicknameComponent, {
+      height: '250px',
+      width: '250px'
+    })
+  }
   sendMessage($event: any, message: string)
   {
     $event.preventDefault();
@@ -42,8 +50,8 @@ export class ChatComponent implements OnInit {
     let p = new pusher(env.key, {
       cluster: env.cluster
     })
+    this.reopen();
     this.channel = p.subscribe('default')
-
     this.channel.bind('recv_msg', (data: any) => {
       console.log(data);
       this.msgs.push(data.message);
