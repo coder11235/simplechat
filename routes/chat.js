@@ -11,13 +11,13 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    if(req.body.name && req.body.content)
+    if(req.body.name && req.body.content && req.body.channel)
     {
-        addMessage(req.body.name, req.body.content);
-        pusher.trigger('default', 'recv_msg', {
+        addMessage(req.body.name, req.body.content, req.body.channel);
+        pusher.trigger(req.body.channel, 'recv_msg', {
             message: {
                 name: req.body.name,
-                content: req.body.content
+                content: req.body.content,
             }
         })
         res.status(200).send({message: "successfull"})

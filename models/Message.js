@@ -8,6 +8,10 @@ let messageSchema = new mon.Schema({
     content: {
         required: true,
         type: String
+    },
+    channel: {
+        required: true,
+        type: String
     }
 })
 
@@ -24,7 +28,7 @@ module.exports.getAllMessages = async () => {
     return await messg.find()
 }
 
-module.exports.addMessage = (name, content) => {
-    let msg = new messg({name: name, content: content})
+module.exports.addMessage = (name, content, channel) => {
+    let msg = new messg({name: name, content: content, channel})
     msg.save();
 }
