@@ -1,0 +1,30 @@
+const mon = require('mongoose')
+const { url, user, pass } = require('../config/database')
+let messageSchema = new mon.Schema({
+    name: {
+        required: true,
+        type: String
+    },
+    content: {
+        required: true,
+        type: String
+    }
+})
+
+let messg = module.exports = mon.model('Messages', messageSchema)
+
+module.exports.connect = () => {
+    mon.connect(url, {
+        user: user,
+        pass: pass
+    })
+}
+
+module.exports.getAllMessages = async () => {
+    return await messg.find()
+}
+
+module.exports.addMessage = (name, content) => {
+    let msg = new messg({name: name, content: content})
+    msg.save();
+}

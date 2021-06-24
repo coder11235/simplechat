@@ -1,24 +1,19 @@
 const router = require('express').Router()
 const push = require('pusher')
+const { getAllMessages, addMessage } = require('../models/Message')
 
 const pusher = new push(require('../config/pusher').pusherconfig)
 
-const data = [{
-    name: "uday",
-    content: "test"
-}]
-
 router.get('/', (req, res) => {
-    res.send(data)
+    let data = getAllMessages().then(data => {
+        res.send(data)
+    })
 })
 
 router.post('/', (req, res) => {
     if(req.body.name && req.body.content)
     {
-        data.push({
-            name: req.body.name,
-            content: req.body.content
-        })
+        addMessage(req.body.name, req.body.content);
         pusher.trigger('default', 'recv_msg', {
             message: {
                 name: req.body.name,
