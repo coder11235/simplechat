@@ -1,13 +1,14 @@
 <div class="main">
-    <div>
-        <mat-card class="message" *ngFor="let msg of msgs" >
-            <mat-card-title>{{msg.content}}</mat-card-title>
+    <mat-card>
+        <mat-card class="message" *ngFor="let msg of msgs" color="accent">
             <mat-card-subtitle>{{msg.name}}</mat-card-subtitle>
+            <mat-card-title>{{msg.content}}</mat-card-title>
         </mat-card>
-    </div>
-    <form (submit)="sendMessage($event, message.value)" style="text-align: center;">
+    </mat-card>
+    <form (submit)="sendMessage($event, message.value)">
         <input class="inp" type="text" name="message" placeholder="type your message here" #message>
+        <br><br>
+        <button mat-raised-button color="primary">Send Message</button>
+        <button mat-button color="warn" (click)="reopen()">change nickname</button>
     </form>
-    <br>
-    <button mat-raised-button color="warn" (click)="reopen()">change nickname</button>
 </div>
