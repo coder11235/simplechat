@@ -15,10 +15,12 @@ export class NicknameComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  sub(nick: string, event: any) {
+  sub(nick: string, event: any, chan: string) {
     event.preventDefault()
     this._comm.nickname = nick
+    this._comm.channel = chan
     this.cookie.set('nick', nick);
+    this.cookie.set('chan', chan);
     this.dialogref.close();
   }
 

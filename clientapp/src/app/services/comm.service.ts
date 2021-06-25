@@ -9,8 +9,9 @@ import { Message } from '../interfaces/message';
 })
 export class CommService {
 
-  nickname: string = "";
+  nickname = "";
   url = 'http://localhost:8080/chat'
+  channel = ""
 
   constructor(private _http: HttpClient) { }
 
