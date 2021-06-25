@@ -1,11 +1,11 @@
 <form>
     <mat-form-field>
         <mat-label>nickname: </mat-label>
-        <input matInput type="text" #nick placeholder="nickname">
+        <input matInput type="text" #nick placeholder="nickname" value="{{getnick()}}">
     </mat-form-field>
     <mat-form-field>
         <mat-label>channel: </mat-label>
-        <input matInput type="text" #chan placeholder="channel">
+        <input matInput type="text" #chan placeholder="channel" value="{{getchan()}}">
     </mat-form-field>
     <br>
     <button mat-button (click)="sub(nick.value, $event, chan.value)" color="primary">enter chat</button>

@@ -15,6 +15,14 @@ export class NicknameComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getnick() {
+    return this._comm.nickname
+  }
+
+  getchan() {
+    return this._comm.channel
+  }
+
   sub(nick: string, event: any, chan: string) {
     event.preventDefault()
     this._comm.nickname = nick
