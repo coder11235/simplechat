@@ -25,7 +25,7 @@ module.exports.connect = () => {
 }
 
 module.exports.getAllMessages = (channel, callback) => {
-    messg.find({'channel': channel}).select('content').exec(callback)
+    messg.find({'channel': channel}).select('content name').exec(callback)
 }
 
 module.exports.addMessage = (name, content, channel) => {
