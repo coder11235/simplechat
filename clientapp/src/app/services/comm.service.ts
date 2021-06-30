@@ -16,8 +16,9 @@ export class CommService {
   constructor(private _http: HttpClient) { }
 
   sendMessage(content: string) {
-    console.log({name: this.nickname, content: content})
-    return this._http.post(this.url, {name: this.nickname, content: content});
+    let data = {name: this.nickname, content: content, channel: this.channel}
+    console.log(data)
+    return this._http.post(this.url, data);
   }
 
   getMessages() {
