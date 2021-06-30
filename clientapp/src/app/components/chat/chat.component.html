@@ -1,10 +1,10 @@
 <div class="main">
-    <mat-card>
+    <div class="msgplace" #sc [scrollTop]="sc.scrollHeight">
         <mat-card class="message" *ngFor="let msg of msgs" color="accent">
             <mat-card-subtitle>{{msg.name}}</mat-card-subtitle>
             <mat-card-title>{{msg.content}}</mat-card-title>
         </mat-card>
-    </mat-card>
+    </div>
     <form (submit)="sendMessage($event, message.value)">
         <input class="inp" type="text" name="message" placeholder="type your message here" #message>
         <br><br>
