@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import pusher from 'pusher-js'
@@ -21,7 +21,12 @@ export class CommService {
     return this._http.post(this.url, data);
   }
 
+  validatemsg(content: string) {
+    if(this.channel != "" && this.nickname != "" && content != "" && this.channel && this.nickname && content) return true
+    else return false
+  }
+
   getMessages() {
-    return this._http.get<Message[]>(this.url)
+    return this._http.get<any>(`${this.url}/${this.channel}`)
   }
 }

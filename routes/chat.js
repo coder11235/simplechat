@@ -4,8 +4,8 @@ const { getAllMessages, addMessage } = require('../models/Message')
 
 const pusher = new push(require('../config/pusher').pusherconfig)
 
-router.get('/', (req, res) => {
-    getAllMessages(req.body.channel, (err, data) => {
+router.get('/:channel', (req, res) => {
+    getAllMessages(req.params.channel, (err, data) => {
         if(err) throw err;
         res.send(data)
     })

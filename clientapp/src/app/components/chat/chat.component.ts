@@ -29,39 +29,43 @@ export class ChatComponent implements OnInit {
   sendMessage($event: any, message: string)
   {
     $event.preventDefault();
-    this._comm.sendMessage(message)
-    .subscribe((data: any) => {
-      if(data.message == "successfull")
-      {
-        console.log('message sent')
-      }
-      else {
-        console.log(data.message)
-      }
-    })
+    if(this._comm.validatemsg(message))
+    {
+      this._comm.sendMessage(message)
+      .subscribe((data: any) => {
+        if(data.message == "successfull")
+        {
+          console.log('message sent')
+        }
+        else {
+          console.log(data.message)
+        }
+      })
+    }
   }
 
   ngOnInit(): void {
-    this._comm.getMessages()
-    .subscribe((data: any) => {
-      console.log(data);
-      this.msgs = data;
-    })
     let p = new pusher(env.key, {
       cluster: env.cluster
     })
-    if(!this.cookie.check('nick'))
+    if(!this.cookie.check('nick') || !this.cookie.check('chan'))
     {
       this.reopen();
     }
     else
     {
       this._comm.nickname = this.cookie.get('nick');
+      this._comm.channel = this.cookie.get('chan');
     }
-    this.channel = p.subscribe('default')
+    this.channel = p.subscribe(this._comm.channel)
     this.channel.bind('recv_msg', (data: any) => {
       console.log(data);
       this.msgs.push(data.message);
+    })
+    this._comm.getMessages()
+    .subscribe((data: any) => {
+      console.log(data);
+      this.msgs = data;
     })
   }
 }
