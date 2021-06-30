@@ -16,6 +16,7 @@ export class ChatComponent implements OnInit {
 
   constructor(private _comm: CommService, private _d: MatDialog, private cookie: CookieService) { }
   channel: any = null;
+  p:any = null
 
   msgs: Message[] = [
   ]
@@ -24,6 +25,8 @@ export class ChatComponent implements OnInit {
     this._d.open(NicknameComponent, {
       height: '250px',
       width: '250px'
+    }).afterClosed().subscribe(() => {
+      this.gm();
     })
   }
   sendMessage($event: any, message: string)
@@ -44,8 +47,21 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  gm() {
+    this._comm.getMessages()
+    .subscribe((data: any) => {
+      console.log(data);
+      this.msgs = data;
+    })
+    this.channel = this.p.subscribe(this._comm.channel)
+    this.channel.bind('recv_msg', (data: any) => {
+      console.log(data);
+      this.msgs.push(data.message);
+    })
+  }
+
   ngOnInit(): void {
-    let p = new pusher(env.key, {
+    this.p = new pusher(env.key, {
       cluster: env.cluster
     })
     if(!this.cookie.check('nick') || !this.cookie.check('chan'))
@@ -57,15 +73,6 @@ export class ChatComponent implements OnInit {
       this._comm.nickname = this.cookie.get('nick');
       this._comm.channel = this.cookie.get('chan');
     }
-    this.channel = p.subscribe(this._comm.channel)
-    this.channel.bind('recv_msg', (data: any) => {
-      console.log(data);
-      this.msgs.push(data.message);
-    })
-    this._comm.getMessages()
-    .subscribe((data: any) => {
-      console.log(data);
-      this.msgs = data;
-    })
+    this.gm();
   }
 }
