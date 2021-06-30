@@ -24,8 +24,8 @@ module.exports.connect = () => {
     })
 }
 
-module.exports.getAllMessages = async () => {
-    return await messg.find()
+module.exports.getAllMessages = (channel, callback) => {
+    messg.find({'channel': channel}).select('content').exec(callback)
 }
 
 module.exports.addMessage = (name, content, channel) => {
